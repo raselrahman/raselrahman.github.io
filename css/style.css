@@ -15,6 +15,41 @@ body {
   color: white;
 }
 
+.certificates-container {
+  display: flex;
+  flex-direction: column; /* Stack certificates vertically */
+  align-items: flex-start; /* Align items to the left */
+  gap: 20px; /* Add space between certificates */
+  margin: 20px 0;
+}
+
+.certificate-item {
+  width: 100%;
+  max-width: 800px;
+}
+
+.certificate-title {
+  font-size: 1.4rem;
+  color: #0033cc; /* Unique blue color for titles */
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.certificate-pdf object,
+.certificate-image img {
+  width: 100%;
+  max-width: 100%; /* Ensure it fits the container */
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.certificate-img {
+  display: block;
+  margin: 10px 0;
+}
+
+
 .container {
   max-width: 85%;
   margin: auto;
