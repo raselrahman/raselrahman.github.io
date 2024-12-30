@@ -670,9 +670,9 @@ circle p {
 .filter-menu li {
   display: inline-block;
   padding: 10px 18px;
-  color: #fff;
+  color: #271919;
   cursor: pointer;
-  color: #fff;
+  color: #c42b2b;
   transition: 0.5s;
 }
 
