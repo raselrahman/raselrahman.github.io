@@ -1210,6 +1210,13 @@ footer .legal {
   .contact .right {
     width: 100%;
   }
+   /*--------- viewer message--------*/
+  .full-width-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    box-sizing: border-box;
+  }
 
   /*---------contact--------*/
   /*---------social_media--------*/
