@@ -13,7 +13,7 @@ toggleBtn.addEventListener("click", () => {
 });
 
 function loadStudentData() {
-  const url = 'baust_info/student_data/_19batch_2_I.xlsx';
+  const url = 'https://raselrahman.github.io/baust_info/student_data/_19batch_2_I.xlsx';
   fetch(url)
     .then(response => response.arrayBuffer())
     .then(data => {
