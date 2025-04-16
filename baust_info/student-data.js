@@ -1,5 +1,5 @@
 document.getElementById('showDataBtn').addEventListener('click', function () {
-  const filePath = 'baust_info/student_data/_19batch_2_I.xlsx'; // Adjust this if hosted elsewhere
+  const filePath = 'baust_info/student_data/_19batch_2_I.xlsx'; // Ensure the correct relative path
   const studentDetailsDiv = document.getElementById('studentDetails');
   const showButton = document.getElementById('showDataBtn');
   

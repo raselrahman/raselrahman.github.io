@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BAUST.ME – 19 Batch Students</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="baust_info/style.css"> <!-- Correct path to the CSS file -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script> <!-- Include XLSX.js -->
 </head>
 <body>
-  <h1>BAUST.ME – 19 Batch Students</h1>
-
-  <button id="toggle-btn">Show Student Details</button>
-
-  <div id="student-section" class="hidden">
-    <div id="student-table">Loading student data...</div>
+  <div class="container">
+    <h1>BAUST.ME – 19 Batch Students</h1>
+    <button id="showDataBtn">Show Student Details</button>
+    <div id="studentDetails" style="display:none;"></div>
   </div>
 
-  <script src="student-data.js"></script>
+  <script src="baust_info/student-data.js"></script> <!-- Correct path to the JS file -->
 </body>
 </html>
