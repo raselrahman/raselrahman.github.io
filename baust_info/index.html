@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>BAUST.ME – Student Information</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BAUST.ME – 19 Batch Students</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
@@ -16,15 +17,5 @@
   </div>
 
   <script src="student-data.js"></script>
-  <script>
-    const toggleBtn = document.getElementById("toggle-btn");
-    const section = document.getElementById("student-section");
-
-    toggleBtn.addEventListener("click", () => {
-      const isHidden = section.classList.contains("hidden");
-      section.classList.toggle("hidden");
-      toggleBtn.textContent = isHidden ? "Hide Student Details" : "Show Student Details";
-    });
-  </script>
 </body>
 </html>
