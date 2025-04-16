@@ -3,12 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <title>BAUST.ME – Student Information</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
   <h1>BAUST.ME – 19 Batch Students</h1>
-  <div id="student-table">Loading student data...</div>
+
+  <button id="toggle-btn">Show Student Details</button>
+
+  <div id="student-section" class="hidden">
+    <div id="student-table">Loading student data...</div>
+  </div>
+
   <script src="student-data.js"></script>
+  <script>
+    const toggleBtn = document.getElementById("toggle-btn");
+    const section = document.getElementById("student-section");
+
+    toggleBtn.addEventListener("click", () => {
+      const isHidden = section.classList.contains("hidden");
+      section.classList.toggle("hidden");
+      toggleBtn.textContent = isHidden ? "Hide Student Details" : "Show Student Details";
+    });
+  </script>
 </body>
 </html>
