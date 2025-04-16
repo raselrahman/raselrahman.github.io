@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>BAUST.ME - Student Info</title>
+  <title>BAUST.ME – Student Info</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
@@ -11,13 +11,20 @@
     <h1>BAUST.ME – Student Information</h1>
   </header>
 
+  <section class="upload-area">
+    <label>
+      Upload Excel file:
+      <input type="file" id="file-input" accept=".xlsx" />
+    </label>
+  </section>
+
   <section class="accordion">
     <button class="accordion-button">View Student Details</button>
     <div class="accordion-content" id="student-table">
-      <p>Loading data...</p>
+      <p>Please upload a file first.</p>
     </div>
   </section>
 
-  <script src="script.js"></script>
+  <script src="student-data.js"></script>
 </body>
 </html>
