@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const excelUrl = "const excelUrl = "https://raselrahman.github.io/baust_info/student_data/_19batch_2_I.xlsx";
+  const excelUrl = "https://raselrahman.github.io/baust_info/student_data/_19batch_2_I.xlsx";
 
   fetch(excelUrl)
     .then(res => {
