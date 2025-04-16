@@ -1,57 +1,62 @@
-document.getElementById('showDataBtn').addEventListener('click', function () {
-  const filePath = 'baust_info/student_data/_19batch_2_I.xlsx'; // Ensure the correct relative path
-  const studentDetailsDiv = document.getElementById('studentDetails');
-  const showButton = document.getElementById('showDataBtn');
-  
-  // Show loading message before data load
-  studentDetailsDiv.innerHTML = '<p>Loading student data...</p>';
-  
-  // Make sure the file path is correct and the file is accessible
-  fetch(filePath)
-      .then(response => response.blob())
-      .then(blob => {
-          const reader = new FileReader();
-          reader.onload = function (event) {
-              const data = event.target.result;
-              
-              // Parse the Excel data here
-              const workbook = XLSX.read(data, { type: 'binary' });
+document.addEventListener("DOMContentLoaded", function () {
+  const buttons = document.querySelectorAll(".toggle-btn");
 
-              // Assuming you want to display data from the first sheet
-              const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  buttons.forEach(button => {
+    button.addEventListener("click", async function () {
+      const tableContainer = this.nextElementSibling;
+      const filePath = "baust_info/" + this.getAttribute("data-file");
 
-              // Convert the sheet to JSON
-              const jsonData = XLSX.utils.sheet_to_json(sheet);
-              displayStudentData(jsonData);
-          };
-          reader.readAsBinaryString(blob);
-      })
-      .catch(error => {
-          studentDetailsDiv.innerHTML = `<p>Error loading student data: ${error.message}</p>`;
-      });
+      if (tableContainer.style.display === "none") {
+        this.textContent = "Hide Student Details";
+        tableContainer.innerHTML = "Loading student data...";
 
-  // Function to display student data
-  function displayStudentData(data) {
-      let tableHTML = '<table><tr><th>SL</th><th>Roll</th><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Class Attendance</th><th>Status</th></tr>';
-      
-      data.forEach(student => {
-          tableHTML += `<tr>
-              <td>${student['SL']}</td>
-              <td>${student['Roll']}</td>
-              <td>${student['Name']}</td>
-              <td>${student['Email']}</td>
-              <td>${student['Phone']}</td>
-              <td>${student['Address']}</td>
-              <td>${student['Class Attendance(dd/mm/yyyy)']}</td>
-              <td>${student['Status']}</td>
-          </tr>`;
-      });
+        try {
+          const response = await fetch(filePath);
+          const arrayBuffer = await response.arrayBuffer();
+          const workbook = XLSX.read(arrayBuffer, { type: "array" });
 
-      tableHTML += '</table>';
-      
-      // Update the page with the data
-      studentDetailsDiv.innerHTML = tableHTML;
-      showButton.textContent = 'Hide Student Details'; // Change the button text to 'Hide'
-      studentDetailsDiv.style.display = 'block'; // Make the student details visible
-  }
+          const sheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+          if (jsonData.length === 0) {
+            tableContainer.innerHTML = "No data found in Excel.";
+            return;
+          }
+
+          // Create table
+          const table = document.createElement("table");
+          const headerRow = document.createElement("tr");
+
+          Object.keys(jsonData[0]).forEach(key => {
+            const th = document.createElement("th");
+            th.textContent = key;
+            headerRow.appendChild(th);
+          });
+          table.appendChild(headerRow);
+
+          jsonData.forEach(row => {
+            const tr = document.createElement("tr");
+            Object.values(row).forEach(cell => {
+              const td = document.createElement("td");
+              td.textContent = cell;
+              tr.appendChild(td);
+            });
+            table.appendChild(tr);
+          });
+
+          tableContainer.innerHTML = "";
+          tableContainer.appendChild(table);
+          tableContainer.style.display = "block";
+
+        } catch (error) {
+          console.error(error);
+          tableContainer.innerHTML = "Error loading Excel file.";
+        }
+      } else {
+        this.textContent = "Show Student Details";
+        tableContainer.style.display = "none";
+      }
+    });
+  });
 });
