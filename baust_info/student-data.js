@@ -1,62 +1,56 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const buttons = document.querySelectorAll(".toggle-btn");
+  const toggleButton = document.getElementById("toggleButton");
+  const container = document.getElementById("studentDataContainer");
+  let isDataLoaded = false;
 
-  buttons.forEach(button => {
-    button.addEventListener("click", async function () {
-      const tableContainer = this.nextElementSibling;
-      const filePath = "baust_info/" + this.getAttribute("data-file");
+  toggleButton.addEventListener("click", () => {
+    if (container.style.display === "none") {
+      container.style.display = "block";
+      toggleButton.textContent = "Hide Student Details";
 
-      if (tableContainer.style.display === "none") {
-        this.textContent = "Hide Student Details";
-        tableContainer.innerHTML = "Loading student data...";
-
-        try {
-          const response = await fetch(filePath);
-          const arrayBuffer = await response.arrayBuffer();
-          const workbook = XLSX.read(arrayBuffer, { type: "array" });
-
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
-          const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
-
-          if (jsonData.length === 0) {
-            tableContainer.innerHTML = "No data found in Excel.";
-            return;
-          }
-
-          // Create table
-          const table = document.createElement("table");
-          const headerRow = document.createElement("tr");
-
-          Object.keys(jsonData[0]).forEach(key => {
-            const th = document.createElement("th");
-            th.textContent = key;
-            headerRow.appendChild(th);
-          });
-          table.appendChild(headerRow);
-
-          jsonData.forEach(row => {
-            const tr = document.createElement("tr");
-            Object.values(row).forEach(cell => {
-              const td = document.createElement("td");
-              td.textContent = cell;
-              tr.appendChild(td);
-            });
-            table.appendChild(tr);
-          });
-
-          tableContainer.innerHTML = "";
-          tableContainer.appendChild(table);
-          tableContainer.style.display = "block";
-
-        } catch (error) {
-          console.error(error);
-          tableContainer.innerHTML = "Error loading Excel file.";
-        }
-      } else {
-        this.textContent = "Show Student Details";
-        tableContainer.style.display = "none";
+      if (!isDataLoaded) {
+        loadExcelData();
+        isDataLoaded = true;
       }
-    });
+    } else {
+      container.style.display = "none";
+      toggleButton.textContent = "Show Student Details";
+    }
   });
+
+  function loadExcelData() {
+    fetch("student_data/_19batch_2_I.xlsx")
+      .then((res) => res.arrayBuffer())
+      .then((ab) => {
+        const workbook = XLSX.read(ab, { type: "array" });
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const json = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+        if (json.length === 0) {
+          container.innerHTML = "<p>No data found in Excel file.</p>";
+          return;
+        }
+
+        let table = "<table border='1'><thead><tr>";
+        json[0].forEach((heading) => {
+          table += `<th>${heading}</th>`;
+        });
+        table += "</tr></thead><tbody>";
+
+        for (let i = 1; i < json.length; i++) {
+          table += "<tr>";
+          json[i].forEach((cell) => {
+            table += `<td>${cell ?? ""}</td>`;
+          });
+          table += "</tr>";
+        }
+        table += "</tbody></table>";
+
+        container.innerHTML = table;
+      })
+      .catch((err) => {
+        container.innerHTML = "<p style='color:red;'>Error loading Excel file.</p>";
+        console.error(err);
+      });
+  }
 });

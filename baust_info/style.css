@@ -1,43 +1,33 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
+    padding: 20px;
+    background: #f7f7f7;
   }
-  
-  h1, h2 {
-    color: #333;
+  .container {
+    max-width: 960px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
-  
-  button.toggle-btn {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 16px;
-    border: none;
+  button {
+    padding: 10px 20px;
+    margin: 15px 0;
+    font-size: 16px;
     cursor: pointer;
-    margin-bottom: 10px;
-    border-radius: 4px;
   }
-  
-  button.toggle-btn:hover {
-    background-color: #0056b3;
-  }
-  
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-top: 10px;
   }
-  
   th, td {
-    padding: 8px 12px;
     border: 1px solid #ccc;
+    padding: 10px;
     text-align: left;
   }
-  
   th {
-    background-color: #007bff;
-    color: white;
+    background: #f0f0f0;
   }
   

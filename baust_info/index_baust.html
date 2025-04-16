@@ -2,29 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BAUST.ME – Student Info</title>
-  <link rel="stylesheet" href="baust_info/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BAUST.ME – Student Information</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>BAUST.ME – Student Information</h1>
-
-  <!-- Add student batch blocks below -->
-  <div class="student-block">
+  <div class="container">
+    <h1>BAUST.ME – Student Information</h1>
     <h2>19 Batch – Section 2 – Group I</h2>
-    <button class="toggle-btn" data-file="student_data/_19batch_2_I.xlsx">Show Student Details</button>
-    <div class="student-table" style="display: none;"></div>
+    <button id="toggleButton">Show Student Details</button>
+    <div id="studentDataContainer" style="display: none;">
+      <p>Loading student data...</p>
+    </div>
   </div>
 
-  <!-- Future file can be added like this:
-  <div class="student-block">
-    <h2>20 Batch – Section 1 – Group A</h2>
-    <button class="toggle-btn" data-file="student_data/_20batch_1_A.xlsx">Show Student Details</button>
-    <div class="student-table" style="display: none;"></div>
-  </div>
-  -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <script src="baust_info/student-data.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="student-data.js"></script>
 </body>
 </html>
