@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function loadExcelData() {
-    fetch("student_data/_19batch_2_I.xlsx")
+    fetch("student_data/batch_19_section2_I.xlsx")
       .then((res) => res.arrayBuffer())
       .then((ab) => {
         const workbook = XLSX.read(ab, { type: "array" });
