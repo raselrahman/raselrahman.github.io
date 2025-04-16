@@ -1,50 +1,57 @@
-const toggleBtn = document.getElementById("toggle-btn");
-const section = document.getElementById("student-section");
-const studentTable = document.getElementById("student-table");
+document.getElementById('showDataBtn').addEventListener('click', function () {
+  const filePath = 'baust_info/student_data/_19batch_2_I.xlsx'; // Adjust this if hosted elsewhere
+  const studentDetailsDiv = document.getElementById('studentDetails');
+  const showButton = document.getElementById('showDataBtn');
+  
+  // Show loading message before data load
+  studentDetailsDiv.innerHTML = '<p>Loading student data...</p>';
+  
+  // Make sure the file path is correct and the file is accessible
+  fetch(filePath)
+      .then(response => response.blob())
+      .then(blob => {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+              const data = event.target.result;
+              
+              // Parse the Excel data here
+              const workbook = XLSX.read(data, { type: 'binary' });
 
-toggleBtn.addEventListener("click", () => {
-  const isHidden = section.classList.contains("hidden");
-  section.classList.toggle("hidden");
-  toggleBtn.textContent = isHidden ? "Hide Student Details" : "Show Student Details";
+              // Assuming you want to display data from the first sheet
+              const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
-  if (!isHidden && !studentTable.innerHTML.includes('SL')) {
-    loadStudentData();
+              // Convert the sheet to JSON
+              const jsonData = XLSX.utils.sheet_to_json(sheet);
+              displayStudentData(jsonData);
+          };
+          reader.readAsBinaryString(blob);
+      })
+      .catch(error => {
+          studentDetailsDiv.innerHTML = `<p>Error loading student data: ${error.message}</p>`;
+      });
+
+  // Function to display student data
+  function displayStudentData(data) {
+      let tableHTML = '<table><tr><th>SL</th><th>Roll</th><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Class Attendance</th><th>Status</th></tr>';
+      
+      data.forEach(student => {
+          tableHTML += `<tr>
+              <td>${student['SL']}</td>
+              <td>${student['Roll']}</td>
+              <td>${student['Name']}</td>
+              <td>${student['Email']}</td>
+              <td>${student['Phone']}</td>
+              <td>${student['Address']}</td>
+              <td>${student['Class Attendance(dd/mm/yyyy)']}</td>
+              <td>${student['Status']}</td>
+          </tr>`;
+      });
+
+      tableHTML += '</table>';
+      
+      // Update the page with the data
+      studentDetailsDiv.innerHTML = tableHTML;
+      showButton.textContent = 'Hide Student Details'; // Change the button text to 'Hide'
+      studentDetailsDiv.style.display = 'block'; // Make the student details visible
   }
 });
-
-function loadStudentData() {
-  const url = 'https://raselrahman.github.io/baust_info/student_data/_19batch_2_I.xlsx';
-  fetch(url)
-    .then(response => response.arrayBuffer())
-    .then(data => {
-      const workbook = XLSX.read(data, { type: "array" });
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-      displayTable(jsonData);
-    })
-    .catch(err => {
-      console.error("Error loading Excel file:", err);
-      studentTable.innerHTML = "Failed to load data.";
-    });
-}
-
-function displayTable(data) {
-  let table = "<table><thead><tr>";
-  data[0].forEach(header => {
-    table += `<th>${header}</th>`;
-  });
-  table += "</tr></thead><tbody>";
-
-  data.slice(1).forEach(row => {
-    table += "<tr>";
-    row.forEach(cell => {
-      table += `<td>${cell}</td>`;
-    });
-    table += "</tr>";
-  });
-
-  table += "</tbody></table>";
-  studentTable.innerHTML = table;
-}
