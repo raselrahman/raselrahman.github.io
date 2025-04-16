@@ -13,16 +13,16 @@ toggleBtn.addEventListener("click", () => {
 });
 
 function loadStudentData() {
-  const url = 'https://raselrahman.github.io/baust_info/index.html'; // path to your Excel file
+  const url = 'baust_info/student_data/_19batch_2_I.xlsx';
   fetch(url)
     .then(response => response.arrayBuffer())
     .then(data => {
       const workbook = XLSX.read(data, { type: "array" });
-      const sheetName = workbook.SheetNames[0]; // Assuming the data is in the first sheet
+      const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 }); // Read as an array of arrays
+      const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-      displayTable(jsonData); // Pass the data to display function
+      displayTable(jsonData);
     })
     .catch(err => {
       console.error("Error loading Excel file:", err);
@@ -32,13 +32,11 @@ function loadStudentData() {
 
 function displayTable(data) {
   let table = "<table><thead><tr>";
-  // Add table headers (the first row of the data)
   data[0].forEach(header => {
     table += `<th>${header}</th>`;
   });
   table += "</tr></thead><tbody>";
 
-  // Add rows for each student
   data.slice(1).forEach(row => {
     table += "<tr>";
     row.forEach(cell => {
